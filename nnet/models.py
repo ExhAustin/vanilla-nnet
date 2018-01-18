@@ -11,7 +11,7 @@
 #   - Rows: Data entries
 #   - Layers available: Dense, Dropout
 #   - Activation functions available: 
-#       linear, sigmoid, tanh, relu, softmax
+#       sigmoid, softmax
 #   - Optimizers available: sgd, Adam
 #   - Loss functions available: quadratic 
 #       (coded inherently, not adjustable in this primitive version)
@@ -22,13 +22,16 @@ import numpy as np
 import .optimizers
 
 def NeuralNet:
-    def __init__(self):
+    def __init__(self, optimizer, lr):
         self.n_layers = 0
         self.layers = []
+        self.optimizer_str = optimizer
+        self.lr = lr
 
     # Add layer to network
     def add_layer(self, layer):
         self.layers.append(layer)
+        layer.init_optimizer(self.optimizer_str, self.lr)
         self.n_layers += 1
 
     # Predict labels
@@ -46,7 +49,7 @@ def NeuralNet:
         Y_pred = self.predict(X, istrain=True)
 
         # Loss function (Quadratic)
-        err = (Y_pred - Y)
+        err = Y_pred - Y
         mse = np.mean(np.dot(err, err.T))
 
         # Backpropagation
@@ -56,7 +59,10 @@ def NeuralNet:
             err_prop, w_grad, b_grad = layer.backprop(err_prop)
 
             # Update layer weights
+            layer.update([w_grad, b_grad])
 
         # Return mean squared error
         return mse
 
+    # Batch training
+    def batch_train(self, X, Y):

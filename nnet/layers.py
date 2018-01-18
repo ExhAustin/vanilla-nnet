@@ -15,24 +15,29 @@ def Dense:
         assert (activation in activations.function_list), 'Invalid activation function.'
         self.sigma = np.eval('activations.' + activation + '()')
 
-    # Forward evaluation
+    # Get output using forward evaluation
     def forward(self, x, istrain=True):
         self.x = x
         self.z = np.dot(self.x, self.w) + self.b
         return self.sigma.forward(self.z)
 
-    # Partial gradient backpropagation (da/dw | x)
+    # Get gradients using backpropagation
     def backprop(self, err):
-        dsigma = self.sigma.gradient(self.z)
-        b_grad = err * dsigma
-        w_grad = np.dot(x.T, b_grad)
-        err_prop = np.dot(err * dsigma, self.w.T)
+        err_z = self.sigma.gradient(err, self.z, repeat=True)
+        b_grad = np.dot(np.ones(self.b.shape), err_z)
+        w_grad = np.dot(self.x.T, err_z)
+        err_next = np.dot(err_z, self.w.T)
 
-        return err_prop, w_grad, b_grad
+        return err_next, w_grad, b_grad
 
-    # Update weights
-    def update(self, grads, optimizer):
-        for self.w
+    # Initialize optimizer
+    def init_optimizer(self, optimizer, lr):
+        assert (optimizer in optimizers.method_list), 'Invalid optimizer argument.'
+        self.optimizer = np.eval('optimizers.' + optimizer + '(' + str(lr) + ')')
+
+    # Update weights using optimizer
+    def update(self, grads):
+        self.optimizer.update_weights([self.w, self.b], grads)
 
 
 def Dropout:
@@ -54,7 +59,7 @@ def Dropout:
         return self.mask
 
     # Update weights
-    def update(self, grads, optimizer):
+    def update(self, grads):
         return  # No weights to update for dropout layers
 
     # Resample mask
