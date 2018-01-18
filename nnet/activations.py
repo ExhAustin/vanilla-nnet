@@ -2,9 +2,9 @@
 
 import numpy as np
 
-function_list = ['linear', 'sigmoid', 'tanh', 'relu', 'softmax']
+function_list = ['sigmoid', 'softmax']
 
-def sigmoid:
+class sigmoid:
     def __init__(self):
         # Use memory of last output to save time in backpropagation
         self.x_prev = 0
@@ -22,7 +22,7 @@ def sigmoid:
             o = self.forward(x)
         return err * o * (1-o)
 
-def softmax:
+class softmax:
     def __init__(self):
         # Use memory of last output to save time in backpropagation
         self.x_prev = 0

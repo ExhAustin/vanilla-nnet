@@ -4,7 +4,7 @@ import numpy as np
 
 method_list = ['sgd', 'Adam']
 
-def sgd:
+class sgd:
     def __init__(self, lr):
         self.lr = lr
 
@@ -12,7 +12,7 @@ def sgd:
         for w, g in zip(weight_list, grad_list):
             w += self.lr * g
 
-def Adam:
+class Adam: #TODO
     def __init__(self, lr, alpha=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8):
         self.lr = lr
         self.alpha = alpha
