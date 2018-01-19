@@ -11,3 +11,7 @@ Code Assessment for Ascent Robotics
 
 ### Running the Iris example
 After setting the working directory to the parent directory of nnet
+
+## Report
+### Design considerations
+### Performance analysis
