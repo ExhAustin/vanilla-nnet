@@ -42,5 +42,4 @@ class softmax:
         o1 = o[...,None]
         diag_comp = np.eye(o.shape[1])[None,...] * o1
         dot_comp = np.matmul(o1, o[:,None,:])
-        return np.matmul((diag_comp + dot_comp), err[...,None])[...,0]
-
+        return np.matmul((diag_comp - dot_comp), err[...,None])[...,0]

@@ -51,9 +51,9 @@ class Dense:
 
 class Dropout:
     def __init__(self, n_in, rate):
-        self.n = n_in
+        self.n_in = n_in
         self.rate = rate    # dropout rate
-        self.mask = np.ones(self.n)
+        self.mask = np.ones(n_in)
 
     # Forward evaluation
     def forward(self, x, istrain=False):
@@ -68,9 +68,13 @@ class Dropout:
         return err*self.mask, None
 
     # Update weights
+    def init_optimizer(self, optimizer, lr):
+        return  # No optimizer to init for dropout layers
+
+    # Update weights
     def update(self, grads):
         return  # No weights to update for dropout layers
 
     # Resample mask
     def resample(self):
-        self.mask = (np.random.uniform(size=self.n) > self.rate).astype('float')
+        self.mask = (np.random.uniform(size=self.n_in) > self.rate).astype('float')

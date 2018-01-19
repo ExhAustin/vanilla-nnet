@@ -9,18 +9,18 @@ from nnet.layers import Dense, Dropout
 # Main function
 def main():
     # Training parameters
-    LEARNING_RATE = 0.03
-    MAX_EPOCHS = 60
-    BATCHSIZE = 10
+    LEARNING_RATE = 0.5
+    MAX_EPOCHS = 70
+    BATCHSIZE = 5
     VALIDATION_RATE = 0.05
 
     # Define neural network architecture
-    net = NeuralNet(lr=LEARNING_RATE, optimizer='Adam')
+    net = NeuralNet(lr=LEARNING_RATE, optimizer='sgd')
     net.add_layer(Dense(n_in=4, n_out=64, activation='sigmoid'))
-    #net.add_layer(Dropout(n_in=64, rate=0.2))
-    #net.add_layer(Dense(n_in=64, n_out=16, activation='sigmoid'))
-    #net.add_layer(Dropout(n_in=16, rate=0.2))
-    net.add_layer(Dense(n_in=64, n_out=3, activation='sigmoid'))
+    net.add_layer(Dropout(n_in=64, rate=0.4))
+    net.add_layer(Dense(n_in=64, n_out=16, activation='sigmoid'))
+    net.add_layer(Dropout(n_in=16, rate=0.2))
+    net.add_layer(Dense(n_in=16, n_out=3, activation='softmax'))
 
     # Parse data
     parser = IrisParser()
@@ -30,10 +30,10 @@ def main():
 
     # Shuffle data to prevent biased validation/test set splits
     n_features = X.shape[1]
-    temp = np.concatenate([X, Y], axis=1)
-    np.random.shuffle(temp)    
-    X = temp[:,0:n_features]
-    Y = temp[:,n_features:]
+    XY = np.concatenate([X, Y], axis=1)
+    np.random.shuffle(XY)    
+    X = XY[:,0:n_features]
+    Y = XY[:,n_features:]
 
     # Split data
     X_train = X[0:135,:]
@@ -59,7 +59,6 @@ def main():
     Y_pred = net.predict(X_test)
     comp = (np.argmax(Y_test, axis=1) == np.argmax(Y_pred, axis=1))
     acc = np.sum(comp) / comp.size
-    print(Y_pred)
     print('Test accuracy after training:', acc*100, '%')
 
 # Parser for the Iris dataset
