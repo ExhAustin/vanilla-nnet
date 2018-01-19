@@ -21,16 +21,17 @@
 import numpy as np
 
 class NeuralNet:
-    def __init__(self, optimizer, lr):
+    def __init__(self, optimizer, lr, reg=0):
         self.n_layers = 0
         self.layers = []
         self.optimizer_str = optimizer
         self.lr = lr
+        self.reg = reg
 
     # Add layer to network
     def add_layer(self, layer):
         self.layers.append(layer)
-        layer.init_optimizer(self.optimizer_str, self.lr)
+        layer.init_optimizer(self.optimizer_str, self.lr, self.reg)
         self.n_layers += 1
 
     # Predict labels
@@ -50,9 +51,10 @@ class NeuralNet:
         # Loss function (Quadratic)
         err = Y_pred - Y
         mse = np.mean(err**2)
+        loss_grad = 2*err
 
         # Backpropagation
-        err_signal = 2*err
+        err_signal = loss_grad
         for layer in self.layers[::-1]:
             # Propagate errors
             err_signal, grads = layer.backprop(err_signal)

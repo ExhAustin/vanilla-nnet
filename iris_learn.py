@@ -18,7 +18,7 @@ def main():
     VALIDATION_RATE = 0.04
 
     # Define neural network architecture
-    net = NeuralNet(lr=LEARNING_RATE, optimizer='Adam')
+    net = NeuralNet(lr=LEARNING_RATE, optimizer='Adam', reg=1e-5)
     net.add_layer(Dense(n_in=4, n_out=64, activation='sigmoid'))
     net.add_layer(Dropout(n_in=64, rate=0.4))
     net.add_layer(Dense(n_in=64, n_out=16, activation='sigmoid'))

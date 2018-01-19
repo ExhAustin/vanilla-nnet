@@ -33,10 +33,10 @@ class Dense:
         return err_next, [w_grad, b_grad]
 
     # Initialize optimizer
-    def init_optimizer(self, optimizer, lr):
+    def init_optimizer(self, optimizer, lr, reg):
         assert (optimizer in method_list), 'Invalid optimizer argument.'
-        self.w_optimizer = eval(optimizer + '(' + str(lr) + ')')
-        self.b_optimizer = eval(optimizer + '(' + str(lr) + ')')
+        self.w_optimizer = eval(optimizer + '(' + str(lr) + ',' + str(reg) + ')')
+        self.b_optimizer = eval(optimizer + '(' + str(lr) + ',' + str(reg) + ')')
 
     # Update weights using optimizer
     def update(self, grads):
@@ -63,7 +63,7 @@ class Dropout:
         return err*self.mask, None
 
     # Update weights
-    def init_optimizer(self, optimizer, lr):
+    def init_optimizer(self, optimizer, lr, reg):
         return  # No optimizer to init for dropout layers
 
     # Update weights
