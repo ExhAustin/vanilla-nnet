@@ -15,6 +15,8 @@
 #   - Optimizers available: sgd, Adam
 #   - Loss functions available: quadratic 
 #       (coded inherently, not adjustable in this primitive version)
+#   - Regularizers available: L2
+#       (coded inherently, not adjustable in this primitive version)
 #
 #####################################################################
 
@@ -25,8 +27,8 @@ class NeuralNet:
         self.n_layers = 0
         self.layers = []
         self.optimizer_str = optimizer
-        self.lr = lr
-        self.reg = reg
+        self.lr = lr    # learning rate
+        self.reg = reg  # regularization
 
     # Add layer to network
     def add_layer(self, layer):
