@@ -42,10 +42,11 @@ def main():
     Y = XY[:,n_features:]
 
     # Split data
-    X_train = X[0:135,:]
-    Y_train = Y[0:135,:]
-    X_test = X[135:,:]
-    Y_test = Y[135:,:]
+    i_split = 135
+    X_train = X[0:i_split,:]
+    Y_train = Y[0:i_split,:]
+    X_test = X[i_split:,:]
+    Y_test = Y[i_split:,:]
 
     # Normalize data using mean and variance of training data
     parser.getNormParams(X_train)
