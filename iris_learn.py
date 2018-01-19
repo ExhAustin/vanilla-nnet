@@ -41,7 +41,7 @@ def main():
     X = XY[:,0:n_features]
     Y = XY[:,n_features:]
 
-    # Split data
+    # Split data into training and testing set
     i_split = 135
     X_train = X[0:i_split,:]
     Y_train = Y[0:i_split,:]
