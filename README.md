@@ -69,5 +69,8 @@ A maximum epoch of 70 was chosen after several runs of the training process.
 
 ### Performance Analysis
 The training error and validation error trends can be seen below:
-!(iris_trend.png)
+![trend_fig](iris_trend.png)
+
+Prediction accuracy on the test set over 10 independent runs:
+96.67%, 93.33%, 96.67%, 100%, 93.33%, 100%, 96.67%, 96.67%, 100%, 96.67%
 
