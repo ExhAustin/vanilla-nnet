@@ -52,7 +52,7 @@ class NeuralNet:
         mse = np.mean(err**2)
 
         # Backpropagation
-        err_signal = -2*err
+        err_signal = 2*err
         for layer in self.layers[::-1]:
             # Propagate errors
             err_signal, grads = layer.backprop(err_signal)

@@ -7,7 +7,7 @@ import nnet.optimizers as optimizers
 class Dense:
     def __init__(self, n_in, n_out, activation):
         # Initialize parameters
-        epsilon = 1e-7
+        epsilon = 1e-2
         self.n_in = n_in
         self.n_out = n_out
         self.w = epsilon*np.random.randn(n_in, n_out) 
@@ -29,17 +29,24 @@ class Dense:
         b_grad = np.sum(err_z, axis=0).reshape(1,-1)
         w_grad = np.dot(self.x.T, err_z)
         err_next = np.dot(err_z, self.w.T)
+        #print('err_z=', err_z)
+        #print('self.x', self.x)
+        #print('self.w=', self.w)
+        #print('err_next', err_next)
+        #print('w_grad', w_grad)
 
         return err_next, [w_grad, b_grad]
 
     # Initialize optimizer
     def init_optimizer(self, optimizer, lr):
         assert (optimizer in optimizers.method_list), 'Invalid optimizer argument.'
-        self.optimizer = eval('optimizers.' + optimizer + '(' + str(lr) + ')')
+        self.w_optimizer = eval('optimizers.' + optimizer + '(' + str(lr) + ')')
+        self.b_optimizer = eval('optimizers.' + optimizer + '(' + str(lr) + ')')
 
     # Update weights using optimizer
     def update(self, grads):
-        self.optimizer.update_weights([self.w, self.b], grads)
+        self.w = self.w_optimizer.update_weights(self.w, grads[0])
+        self.b = self.b_optimizer.update_weights(self.b, grads[1])
 
 
 class Dropout:

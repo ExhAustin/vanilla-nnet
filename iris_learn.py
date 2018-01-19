@@ -9,18 +9,18 @@ from nnet.layers import Dense, Dropout
 # Main function
 def main():
     # Training parameters
-    LEARNING_RATE = 1e-6
-    MAX_EPOCHS = 10
+    LEARNING_RATE = 0.03
+    MAX_EPOCHS = 60
     BATCHSIZE = 10
     VALIDATION_RATE = 0.05
 
     # Define neural network architecture
-    net = NeuralNet(lr=LEARNING_RATE, optimizer='sgd')
-    net.add_layer(Dense(n_in=4, n_out=128, activation='sigmoid'))
-    #net.add_layer(Dropout(n_in=32, rate=0.2))
-    #net.add_layer(Dense(n_in=32, n_out=32, activation='sigmoid'))
-    #net.add_layer(Dropout(n_in=32, rate=0.2))
-    net.add_layer(Dense(n_in=128, n_out=3, activation='softmax'))
+    net = NeuralNet(lr=LEARNING_RATE, optimizer='Adam')
+    net.add_layer(Dense(n_in=4, n_out=64, activation='sigmoid'))
+    #net.add_layer(Dropout(n_in=64, rate=0.2))
+    #net.add_layer(Dense(n_in=64, n_out=16, activation='sigmoid'))
+    #net.add_layer(Dropout(n_in=16, rate=0.2))
+    net.add_layer(Dense(n_in=64, n_out=3, activation='sigmoid'))
 
     # Parse data
     parser = IrisParser()
@@ -59,6 +59,7 @@ def main():
     Y_pred = net.predict(X_test)
     comp = (np.argmax(Y_test, axis=1) == np.argmax(Y_pred, axis=1))
     acc = np.sum(comp) / comp.size
+    print(Y_pred)
     print('Test accuracy after training:', acc*100, '%')
 
 # Parser for the Iris dataset
