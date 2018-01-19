@@ -21,6 +21,7 @@ class Adam:
         self.beta2 = beta2
         self.epsilon = epsilon
 
+        # Initialize timestep and moments
         self.t = 0
         self.m = 0
         self.v = 0
