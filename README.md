@@ -19,6 +19,12 @@ Run `python3 iris_learn.py` with the working directory set as the parent directo
 - Example usage of the neural network model on the Iris dataset.
 - See previous section for instructions on how to run this file.
 
+**requirements.txt**
+- Requirement file for pip.
+
+**iris_trend.txt**
+- Graph of training and validation errors over time of the implementation on the Iris dataset.
+
 ### nnet/
 **activations.py**
 - Contains activation functions.
@@ -68,9 +74,12 @@ An early stopping mechanism was orignally implemented in the training process to
 A maximum epoch of 70 was chosen after several runs of the training process.
 
 ### Performance Analysis
-The training error and validation error trends can be seen below:
+The training error and validation error trends while learning the Iris dataset can be seen below:
 ![trend_fig](iris_trend.png)
 
-Prediction accuracy on the test set over 10 independent runs:
+Prediction accuracy on the test set over 10 independent runs:  
 96.67%, 93.33%, 96.67%, 100%, 93.33%, 100%, 96.67%, 96.67%, 100%, 96.67%
 
+Mean accuracy: 97%
+
+Thus, this configuration is fairly accurate for the iris dataset.
