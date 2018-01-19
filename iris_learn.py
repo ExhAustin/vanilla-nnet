@@ -9,10 +9,10 @@ from nnet.layers import Dense, Dropout
 # Main function
 def main():
     # Training parameters
-    LEARNING_RATE = 0.5
+    LEARNING_RATE = 0.3
     MAX_EPOCHS = 70
     BATCHSIZE = 5
-    VALIDATION_RATE = 0.05
+    VALIDATION_RATE = 0.04
 
     # Define neural network architecture
     net = NeuralNet(lr=LEARNING_RATE, optimizer='sgd')
