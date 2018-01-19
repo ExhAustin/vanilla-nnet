@@ -8,6 +8,9 @@ from nnet.layers import Dense, Dropout
 
 # Main function
 def main():
+    #--------------------------
+    # Model initialization
+    #--------------------------
     # Training parameters
     LEARNING_RATE = 0.005
     MAX_EPOCHS = 70
@@ -22,7 +25,10 @@ def main():
     net.add_layer(Dropout(n_in=16, rate=0.2))
     net.add_layer(Dense(n_in=16, n_out=3, activation='softmax'))
 
-    # Parse data
+    #--------------------------
+    # Data preprocessing
+    #--------------------------
+    # Load data
     parser = IrisParser()
     iris = datasets.load_iris()
     Y = parser.parseY(iris.target)
@@ -41,13 +47,21 @@ def main():
     X_test = X[135:,:]
     Y_test = Y[135:,:]
 
+    # Normalize data using mean and variance of training data
+    parser.getNormParams(X_train)
+    X_train = parser.normalize(X_train)
+    X_test = parser.normalize(X_test)
+
+    #--------------------------
+    # Training
+    #--------------------------
     # Check accuracy of initial model with test set
     Y_pred = net.predict(X_test)
     comp = (np.argmax(Y_test, axis=1) == np.argmax(Y_pred, axis=1))
     acc = np.sum(comp) / comp.size
     print('Test accuracy before training:', acc*100, '%')
 
-    # Train
+    # Train network
     net.train(X_train, Y_train, 
             max_epochs = MAX_EPOCHS, 
             batchsize = BATCHSIZE,
@@ -65,13 +79,7 @@ def main():
 class IrisParser:
     # Data parser
     def parseX(self, data):
-        # Update normalization parameters
-        self.mu_x = np.mean(data, axis=0)
-        self.sigma_x = np.std(data, axis=0)
-
-        # Normalize
-        X = self.normalize(data)
-
+        X = data
         return X
 
     # Label parser
@@ -81,9 +89,14 @@ class IrisParser:
             Y[i, target[i]] = 1
         return Y
 
+    # Get normalization parameters of data
+    def getNormParams(self, data):
+        self.mu = np.mean(data, axis=0)
+        self.sigma = np.std(data, axis=0)
+
     # Normalize data
     def normalize(self, data):
-        X = (data - self.mu_x) / self.sigma_x
+        X = (data - self.mu) / self.sigma
         return X
 
 
