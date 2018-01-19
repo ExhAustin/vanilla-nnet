@@ -6,7 +6,6 @@ function_list = ['sigmoid', 'softmax']
 
 class sigmoid:
     def __init__(self):
-        # Use memory of last output to save time in backpropagation
         self.x_prev = 0
         self.o_prev = 0
 
@@ -24,7 +23,6 @@ class sigmoid:
 
 class softmax:
     def __init__(self):
-        # Use memory of last output to save time in backpropagation
         self.x_prev = 0
         self.o_prev = 0
 

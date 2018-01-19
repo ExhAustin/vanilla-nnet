@@ -1,8 +1,8 @@
 # Layer types for Neural Networks
 
 import numpy as np
-import nnet.activations as activations
-import nnet.optimizers as optimizers
+from .activations import *
+from .optimizers import *
 
 class Dense:
     def __init__(self, n_in, n_out, activation):
@@ -14,8 +14,8 @@ class Dense:
         self.b = epsilon*np.random.randn(1, n_out) 
 
         # Define activation function
-        assert (activation in activations.function_list), 'Invalid activation function.'
-        self.sigma = eval('activations.' + activation + '()')
+        assert (activation in function_list), 'Invalid activation function.'
+        self.sigma = eval(activation + '()')
 
     # Get output using forward evaluation
     def forward(self, x, istrain=False):
@@ -29,19 +29,14 @@ class Dense:
         b_grad = np.sum(err_z, axis=0).reshape(1,-1)
         w_grad = np.dot(self.x.T, err_z)
         err_next = np.dot(err_z, self.w.T)
-        #print('err_z=', err_z)
-        #print('self.x', self.x)
-        #print('self.w=', self.w)
-        #print('err_next', err_next)
-        #print('w_grad', w_grad)
 
         return err_next, [w_grad, b_grad]
 
     # Initialize optimizer
     def init_optimizer(self, optimizer, lr):
-        assert (optimizer in optimizers.method_list), 'Invalid optimizer argument.'
-        self.w_optimizer = eval('optimizers.' + optimizer + '(' + str(lr) + ')')
-        self.b_optimizer = eval('optimizers.' + optimizer + '(' + str(lr) + ')')
+        assert (optimizer in method_list), 'Invalid optimizer argument.'
+        self.w_optimizer = eval(optimizer + '(' + str(lr) + ')')
+        self.b_optimizer = eval(optimizer + '(' + str(lr) + ')')
 
     # Update weights using optimizer
     def update(self, grads):
