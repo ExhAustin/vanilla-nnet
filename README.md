@@ -2,6 +2,8 @@
 
 Code Assignment for Ascent Robotics
 
+By Austin Shih-Ping Wang
+
 ## Synopsis
 
 ### Requirements
