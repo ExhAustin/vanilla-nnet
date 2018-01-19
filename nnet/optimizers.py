@@ -28,12 +28,14 @@ class Adam:
     def update_weights(self, w, g):
         # Update parameters
         self.t += 1
-        self.lr = self.lr * np.sqrt(1-self.beta2**self.t) / (1-self.beta1**self.t)
         self.m = self.beta1*self.m + (1-self.beta1)*g
         self.v = self.beta2*self.v + (1-self.beta2)*g*g
-        print(self.m)
+
+        # Compute bias-corrected moments
+        m_bc = self.m / (1 - self.beta1**self.t)
+        v_bc = self.v / (1 - self.beta2**self.t)
 
         # Update weights
-        w = w - self.lr * self.m/(np.sqrt(self.v) + self.epsilon)
+        w = w - self.lr * m_bc/(np.sqrt(v_bc) + self.epsilon)
 
         return w
