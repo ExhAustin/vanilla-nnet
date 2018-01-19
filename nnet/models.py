@@ -71,6 +71,9 @@ class NeuralNet:
         n_batches = int(np.ceil(n_train_data/batchsize))
         prev_err = None
 
+        if verbose:
+            print('Training network...')
+
         # Iteratively train network
         for e in range(max_epochs):
             # Train epoch
