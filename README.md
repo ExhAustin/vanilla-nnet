@@ -1,8 +1,6 @@
 # Vanilla Feedforward Neural Network
 
-Code Assignment for Ascent Robotics
-
-By Austin Shih-Ping Wang
+Author: Austin Shih-Ping Wang
 
 ## Synopsis
 
