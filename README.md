@@ -41,7 +41,7 @@ Run `python3 iris_learn.py` with the working directory set as the parent directo
 **models.py**
 - Contains the main neural network model.
 
-## Assignment Report
+## Implementation Details
 
 ### Design Considerations
 The interface of the neural network was inspired by previous experiences with Keras. 
