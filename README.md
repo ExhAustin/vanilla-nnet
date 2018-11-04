@@ -1,6 +1,7 @@
 # Vanilla Feedforward Neural Network
 
 Author: Austin Shih-Ping Wang
+Year: 2018
 
 ## Synopsis
 
